@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reevolve Form Redesign</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        .progress-bar span {
+            width: 30%;
+            padding: 10px;
+            background: #d9e4fd;
+            text-align: center;
+            border-radius: 5px;
+        }
+        .progress-bar span.active {
+            background: #4caf50;
+            color: white;
+        }
+        .form-section {
+            display: none;
+        }
+        .form-section.active {
+            display: block;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .input-group input, .input-group textarea, .input-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .button-group button {
+            padding: 10px 20px;
+            background: #4caf50;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button-group button:disabled {
+            background: #ccc;
+        }
+        .trust-badge, .privacy {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .trust-badge img {
+            max-width: 120px;
+            margin: 10px 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Reevolve Startup Application</h2>
+
+        <div class="progress-bar">
+            <span class="active">1. Personal Info</span>
+            <span>2. Startup Details</span>
+            <span>3. Premium Services</span>
+        </div>
+
+        <!-- Personal Info Section -->
+        <div class="form-section active" id="personal-info">
+            <div class="input-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" placeholder="Enter your name">
+            </div>
+            <div class="input-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="Enter your email">
+            </div>
+            <div class="input-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" placeholder="Enter your phone number">
+            </div>
+            <div class="button-group">
+                <button disabled>Back</button>
+                <button onclick="nextSection('startup-details')">Next</button>
+            </div>
+        </div>
+
+        <!-- Startup Details Section -->
+        <div class="form-section" id="startup-details">
+            <div class="input-group">
+                <label for="startup-name">Startup Name</label>
+                <input type="text" id="startup-name" placeholder="Enter your startup name">
+            </div>
+            <div class="input-group">
+                <label for="problem">Describe Your Problem</label>
+                <textarea id="problem" placeholder="Describe the problem your startup is solving"></textarea>
+            </div>
+            <div class="input-group">
+                <label for="market">Target Market</label>
+                <input type="text" id="market" placeholder="Enter your target market">
+            </div>
+            <div class="button-group">
+                <button onclick="prevSection('personal-info')">Back</button>
+                <button onclick="nextSection('premium-services')">Next</button>
+            </div>
+        </div>
+
+        <!-- Premium Services Section -->
+        <div class="form-section" id="premium-services">
+            <p>Select the premium services you need help with:</p>
+            <div class="input-group">
+                <input type="checkbox" id="visa" name="premium" value="Startup Visa">
+                <label for="visa">Startup Visa Assistance</label>
+            </div>
+            <div class="input-group">
+                <input type="checkbox" id="finance" name="premium" value="Financial Planning">
+                <label for="finance">Financial Planning</label>
+            </div>
+            <div class="input-group">
+                <input type="checkbox" id="biz-model" name="premium" value="Business Model">
+                <label for="biz-model">Business Model Development</label>
+            </div>
+            <div class="button-group">
+                <button onclick="prevSection('startup-details')">Back</button>
+                <button onclick="submitForm()">Submit</button>
+            </div>
+        </div>
+
+        <div class="trust-badge">
+            <p>Trusted by:</p>
+            <img src="logo1.png" alt="Company 1">
+            <img src="logo2.png" alt="Company 2">
+        </div>
+
+        <div class="privacy">
+            <p><small>Your data is secure and confidential. <a href="#">Learn more</a>.</small></p>
+        </div>
+    </div>
+
+    <script>
+        function nextSection(sectionId) {
+            document.querySelector('.form-section.active').classList.remove('active');
+            document.getElementById(sectionId).classList.add('active');
+
+            const progressSpans = document.querySelectorAll('.progress-bar span');
+            progressSpans.forEach((span, index) => {
+                span.classList.remove('active');
+                if (index <= Array.from(progressSpans).findIndex(span => span.innerText.includes(sectionId.split('-')[0].charAt(0).toUpperCase()))) {
+                    span.classList.add('active');
+                }
+            });
+        }
+
+        function prevSection(sectionId) {
+            nextSection(sectionId);
+        }
+
+        function submitForm() {
+            alert('Your application has been submitted successfully!');
+        }
+    </script>
+</body>
+</html>
